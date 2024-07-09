@@ -1,10 +1,16 @@
 import {BookItem, CategoryItem} from "../types";
-import {getSlug, bookImagePrefix, icons} from "../utils";
+import {icons, bookImageFilename} from "../utils";
 import "./CategoryBookListItem.css";
+import {useCart} from "../contexts/CartContext.tsx";
 
 export default function CategoryBookListItem(props: { book: BookItem, categories: CategoryItem[] }) {
 
-    const bookImageFileName = `${getSlug(props.book.title)}.jpg`;
+    const {dispatch} = useCart();
+    const handleAddToCart = () =>
+        dispatch(
+            {type: 'ADD_BOOK', book: props.book}
+        );
+
     const category = props.categories.find((category) => category.categoryId === props.book.categoryId);
 
     let icon = '';
@@ -25,14 +31,14 @@ export default function CategoryBookListItem(props: { book: BookItem, categories
             <div className="book-image">
                 <a href="#">
                     <img
-                        src={`${bookImagePrefix}${bookImageFileName}`}
+                        src={`${bookImageFilename(props.book)}`}
                         alt={props.book.title}
                     />
                 </a>
             </div>
             <p className="book-quote" title={props.book.description}><i
                 className={icon}></i> - {props.book.description}</p>
-            <button className="primary-button"><i className="fa-solid fa-cart-shopping"></i> Add to Cart</button>
+            <button className="primary-button" onClick={handleAddToCart}><i className="fa-solid fa-cart-shopping"></i> Add to Cart</button>
         </li>
     );
 }

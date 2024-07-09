@@ -1,0 +1,129 @@
+.cart-table {
+    display: grid;
+    margin: 0 auto;
+    width: fit-content;
+    background-color: var(--primary-background-color);
+    grid-template-columns: max-content minmax(10em, 20em) repeat(3, max-content);
+    row-gap: 1em;
+    align-items: center;
+}
+
+ul.cart2,
+ul.cart2 > li {
+    display: contents;
+}
+
+.table-heading {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.table-heading > * {
+    padding: 0.5em;
+    background-color: var(--primary-color);
+}
+
+.heading-image {
+    grid-column: 1 / 2;
+}
+
+.heading-book {
+    grid-column: 2 / 3;
+}
+
+.heading-price {
+    grid-column: 3 / 4;
+}
+
+.heading-quantity {
+    grid-column: 4 / 5;
+}
+
+.heading-subtotal {
+    grid-column: 5 / 6;
+}
+
+.grid-table-row,
+.grid-book-row {
+    display: contents;
+    justify-content: center;
+}
+
+.cart-book-image {
+    padding: 0 1em;
+}
+
+.cart2 img.cart {
+    display: block;
+    width: 100px;
+    height: auto;
+}
+
+.cart-book-title,
+.cart-book-price,
+.cart-book-quantity,
+.cart-book-subtotal {
+    padding: 1em;
+    text-align: center;
+}
+
+.line-sep {
+    display: block;
+    height: 2px;
+    background-color: var(--default-text-color);
+    grid-column: 1 / -1; /* span all columns */
+}
+
+.icon-button {
+    border: none;
+    cursor: pointer;
+}
+
+.dec-button {
+    color: var(--tertiary-color);
+    background-color: inherit;
+    font-size: 1.125rem;
+}
+
+.inc-button {
+    color: var(--primary-color);
+    background-color: inherit;
+    font-size: 1.125rem;
+}
+
+.inc-button:hover,
+.dec-button:hover {
+    color: var(--secondary-color);
+}
+
+.cart-subtotal-label {
+    grid-column: 4 / 5;
+    text-align: center;
+}
+
+.cart-subtotal-amount {
+    grid-column: 5 / 6;
+    text-align: center;
+}
+
+.cart-total-label {
+    grid-column: 4 / 5;
+    text-align: center;
+    font-size: large;
+}
+
+.cart-total-amount {
+    grid-column: 5 / 6;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.cart-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}

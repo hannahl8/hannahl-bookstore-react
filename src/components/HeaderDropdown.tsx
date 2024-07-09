@@ -1,12 +1,11 @@
 import CategoryNavLinks from "./CategoryNavLinks.tsx";
 import "./HeaderDropdown.css";
-import {CategoryProps} from "../types.ts";
 
-export default function HeaderDropdown(props: CategoryProps) {
+export default function HeaderDropdown() {
     return (
         <div className="header-dropdown">
             <button className="button"><i className="fa-solid fa-bars"></i> MENU</button>
-            <CategoryNavLinks categories={props.categories}/>
+            <CategoryNavLinks />
         </div>
     );
 }

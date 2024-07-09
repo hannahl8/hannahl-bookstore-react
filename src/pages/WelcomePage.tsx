@@ -2,9 +2,8 @@ import HomeCategoryList from "../components/HomeCategoryList";
 import "./WelcomePage.css";
 import {Link} from "react-router-dom";
 import {siteImagePrefix} from "../utils.ts";
-import {CategoryProps} from "../types.ts";
 
-export default function WelcomePage(props: CategoryProps) {
+export default function WelcomePage() {
     return (
         <div className="home-page">
             <section className="welcome-text container">
@@ -36,7 +35,7 @@ export default function WelcomePage(props: CategoryProps) {
                 </div>
             </section>
             <section className="category-images container">
-                <HomeCategoryList categories={props.categories}/>
+                <HomeCategoryList />
             </section>
         </div>
     );

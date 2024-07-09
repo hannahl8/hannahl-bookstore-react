@@ -1,3 +1,5 @@
+import {BookItem} from "./types.ts";
+
 export function getSlug(name: string): string {
     name = name.toLowerCase();
     name = name.replace(/ /g, "-");
@@ -8,7 +10,7 @@ export function getSlug(name: string): string {
 export const bookImagePrefix = `${import.meta.env.BASE_URL}/book-images/`;
 export const categoryImagePrefix = `${import.meta.env.BASE_URL}/category-images/`;
 export const siteImagePrefix = `${import.meta.env.BASE_URL}/site-images/`;
-
+export const bookImageFilename = (book: BookItem) => `${bookImagePrefix}${getSlug(book.title)}.jpg`;
 
 export const apiUrl =
     `${location.protocol}//${location.hostname}:` +
@@ -26,3 +28,4 @@ export const icons: Record<string, string> = {
     'Tea': teaIcon,
     'Coffee': coffeeIcon
 }
+

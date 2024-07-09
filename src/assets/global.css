@@ -204,11 +204,29 @@ body {
   padding: 0.5em 1em;
   cursor: pointer;
   border-radius: 1em;
+  width: fit-content;
 }
 
 .primary-button:hover,
 .primary-button:active {
   background: var(--secondary-color);
+}
+
+.secondary-button,
+.secondary-button:visited {
+  display: inline-block;
+  background: var(--secondary-color);
+  color: var(--default-text-color);
+  text-decoration: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-radius: 1em;
+  width: fit-content;
+}
+
+.secondary-button:hover,
+.secondary-button:active {
+  background: var(--tertiary-color);
 }
 
 .tertiary-button,
@@ -220,6 +238,7 @@ body {
   padding: 0.1em 1em;
   cursor: pointer;
   border-radius: 1em;
+  width: fit-content;
 }
 
 .tertiary-button:hover,
@@ -239,6 +258,7 @@ body {
   cursor: pointer;
   border: none;
   font-style: italic;
+  width: fit-content;
 }
 
 .tertiary-button-other:hover,

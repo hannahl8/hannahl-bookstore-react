@@ -1,12 +1,16 @@
 import {NavLink} from "react-router-dom";
-import {CategoryProps} from "../types.ts";
 import {icons} from "../utils.ts";
+import {useCategoryContext} from '../contexts/CategoryContext';
 
-export default function CategoryNavLinks(props: CategoryProps) {
-    const categoryNavLinks = props.categories.map((category) => {
+export default function CategoryNavLinks() {
+    const {categories, setLastSelectedCategoryName} = useCategoryContext();
+    const handleCategoryClick = (categoryName: string) => {
+        setLastSelectedCategoryName(categoryName);
+    }
+    const categoryNavLinks = categories.map((category) => {
         const icon = category.name in icons ? icons[category.name] : '';
         return (
-            <li key={category.categoryId}>
+            <li key={category.categoryId} onClick={() => handleCategoryClick(category.name)}>
                 <NavLink to={`/category/${category.name}`}>{category.name} <i className={icon}></i></NavLink>
             </li>
         );

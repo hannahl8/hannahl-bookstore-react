@@ -1,9 +1,10 @@
 import HomeCategoryListItem from "./HomeCategoryListItem";
 import "./HomeCategoryList.css";
-import { CategoryProps} from "../types.ts";
+import {useCategoryContext} from "../contexts/CategoryContext.tsx";
 
-export default function HomeCategoryList(props: CategoryProps) {
-    const firstFourCategories = props.categories.slice(0, 4);
+export default function HomeCategoryList() {
+    const { categories } = useCategoryContext();
+    const firstFourCategories = categories.slice(0, 4);
     const categoryImageLinks = firstFourCategories.map((myCategory) => (
         <li key={myCategory.categoryId}>
             <HomeCategoryListItem category={myCategory}/>

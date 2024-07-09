@@ -2,12 +2,11 @@ import HeaderDropdown from "./HeaderDropdown";
 import "./AppHeader.css";
 import {Link} from "react-router-dom";
 import {siteImagePrefix} from "../utils";
-import {CategoryProps} from "../types.ts";
 import {useState} from "react";
+import {useCart} from "../contexts/CartContext";
 
-export default function AppHeader(props: CategoryProps) {
-
-    // Transitions between search button and input field
+export default function AppHeader() {
+    const {cart} = useCart();
     const [searchClicked, setSearchClicked] = useState(false);
 
     return (
@@ -27,7 +26,7 @@ export default function AppHeader(props: CategoryProps) {
                 </Link>
             </section>
             <section className="menu-search-cart-login">
-                <HeaderDropdown categories={props.categories}/>
+                <HeaderDropdown/>
                 {searchClicked ? (
                     <input
                         type="text"
@@ -39,8 +38,12 @@ export default function AppHeader(props: CategoryProps) {
                     <button className="button" onClick={() => setSearchClicked(true)}><i
                         className="fa-solid fa-search"></i> SEARCH</button>
                 )}
-
-                <button className="button"><i className="fa-solid fa-cart-shopping"></i> (1) CART</button>
+                <Link to="/cart">
+                    <button className="button">
+                        <i className="fa-solid fa-cart-shopping"></i> ( <span
+                        className='cart-size'>{cart.numberOfItems}</span> ) CART
+                    </button>
+                </Link>
                 <button className="button"><i className="fa-solid fa-right-to-bracket"></i> SIGN IN</button>
             </section>
         </header>
