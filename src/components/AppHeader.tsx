@@ -40,8 +40,8 @@ export default function AppHeader() {
                 )}
                 <Link to="/cart">
                     <button className="button">
-                        <i className="fa-solid fa-cart-shopping"></i> ( <span
-                        className='cart-size'>{cart.numberOfItems}</span> ) CART
+                        <i className="fa-solid fa-cart-shopping"></i> <span
+                        className='cart-size'>{cart.numberOfItems}</span> CART
                     </button>
                 </Link>
                 <button className="button"><i className="fa-solid fa-right-to-bracket"></i> SIGN IN</button>

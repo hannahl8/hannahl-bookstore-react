@@ -6,6 +6,7 @@ import CartPage from "./pages/CartPage.tsx";
 import CheckoutPage from "./pages/CheckoutPage.tsx";
 import "./App.css";
 import {Routes, Route} from "react-router-dom";
+import ConfirmationPage from "./pages/ConfirmationPage.tsx";
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
                 <Route path="/category/:categoryName" element={<CategoryPage/>}/>
                 <Route path="/cart" element={<CartPage/>}/>
                 <Route path="/checkout" element={<CheckoutPage/>}/>
+                <Route path="/confirmation" element={<ConfirmationPage/>}/>
             </Routes>
             <AppFooter/>
         </div>

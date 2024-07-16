@@ -1,0 +1,68 @@
+.checkout-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+}
+
+.checkout-page-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    padding: 1em;
+}
+
+.checkout-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+}
+
+.checkout-page-form-and-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-page form > div {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.6em;
+}
+
+.checkout-page form .complete-purchase {
+    display: flex;
+    justify-content: center;
+}
+
+.checkout-page form > div > input,
+.checkout-page form > div > select {
+    background-color: var(--default-text-color);
+    margin-left: 0.5em;
+    border-radius: 0.5em;
+}
+
+.checkout-page form > .error,
+.checkout-field-error {
+    color: #FF69B4;
+    text-align: right;
+    font-size: smaller;
+    margin-left: 1em;
+    font-style: italic;
+}
+
+.checkout-page form > button:disabled {
+    background-color: var(--tertiary-color);
+    border-color: var(--secondary-color);
+}
+
+.checkout-page .checkout-details {
+    margin-top: 0.5em;
+}
+
+.checkout-page .checkoutStatusBox {
+    margin: 1em;
+    padding: 1em;
+    text-align: center;
+}

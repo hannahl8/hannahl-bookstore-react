@@ -195,6 +195,25 @@ body {
   background: var(--secondary-color);
 }
 
+.call-to-action-button-skinny,
+.call-to-action-button-skinny:visited {
+  display: inline-block;
+  background: var(--primary-color);
+  color: var(--default-text-color);
+  text-decoration: none;
+  padding: 0.5em 1em;
+  margin-top: 0.5em;
+  cursor: pointer;
+  border-radius: 0.5em;
+  font-weight: bold;
+  width: fit-content;
+}
+
+.call-to-action-button-skinny:hover,
+.call-to-action-button-skinny:active {
+  background: var(--secondary-color);
+}
+
 .primary-button,
 .primary-button:visited {
   display: inline-block;
