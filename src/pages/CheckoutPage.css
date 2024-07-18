@@ -36,6 +36,12 @@
     justify-content: center;
 }
 
+.checkout-page form .info-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+
 .checkout-page form > div > input,
 .checkout-page form > div > select {
     background-color: var(--default-text-color);
@@ -45,7 +51,7 @@
 
 .checkout-page form > .error,
 .checkout-field-error {
-    color: #FF69B4;
+    color: var(--error-text-color);
     text-align: right;
     font-size: smaller;
     margin-left: 1em;
@@ -61,8 +67,14 @@
     margin-top: 0.5em;
 }
 
-.checkout-page .checkoutStatusBox {
-    margin: 1em;
+.checkout-page .checkout-status-box,
+.checkout-page .charges-div {
     padding: 1em;
     text-align: center;
+    border-top: 1px dotted var(--secondary-color);
+}
+
+.checkout-page .checkout-status-box {
+    color: var(--error-text-color);
+    font-style: italic;
 }

@@ -11,6 +11,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {useCategoryContext} from "../contexts/CategoryContext.tsx";
 import "./CheckoutPage.css";
+import {OrderDetails, ServerErrorResponse} from "../types.ts";
+import {placeOrder} from "../services.ts";
 
 interface FormValues {
     name: string;
@@ -28,11 +30,19 @@ const initialValues: FormValues = {
     phone: '',
     email: '',
     ccNumber: '',
-    ccExpiryMonth: new Date().getMonth(),
+    ccExpiryMonth: new Date().getMonth() + 1,
     ccExpiryYear: new Date().getFullYear(),
 };
 
-const yearsArray = years();
+// const initialValues: FormValues = {
+//     name: 'Hannah Lyons',
+//     address: '12979 Hampton Forest Ct.',
+//     phone: '571-332-2465',
+//     email: 'hannahl8@vt.edu',
+//     ccNumber: '4444333322221111',
+//     ccExpiryMonth: new Date().getMonth() + 1,
+//     ccExpiryYear: new Date().getFullYear(),
+// };
 
 const validationSchema = object({
     name: string()
@@ -61,9 +71,14 @@ export default function CheckoutPage() {
     const {lastSelectedCategoryName} = useCategoryContext();
     const navigate = useNavigate();
     const [checkoutStatus, setCheckoutStatus] = useState<string>("");
+    const [serverErrorMessage, setServerErrorMessage] = useState<string>(
+        "An unexpected error occurred on the server, please try again."
+    );
 
-    const handleSubmit = async (values: FormValues, actions: FormikHelpers<FormValues>) => {
-
+    const handleSubmit = async (
+        values: FormValues,
+        actions: FormikHelpers<FormValues>
+    ) => {
         console.log("Submit order");
         await sleep(1000);
         const result = await validationSchema.validate(values, {abortEarly: false}).catch((err) => err);
@@ -71,11 +86,26 @@ export default function CheckoutPage() {
             setCheckoutStatus('ERROR');
             actions.setSubmitting(false);
         } else {
-            setCheckoutStatus('PENDING');
-            await sleep(1000);
-            setCheckoutStatus('OK');
-            await sleep(1000);
-            navigate('/confirmation');
+            setCheckoutStatus("PENDING");
+            const placeOrderResponse: OrderDetails | ServerErrorResponse =
+                await placeOrder(cart, {
+                    name: values.name,
+                    address: values.address,
+                    phone: values.phone,
+                    email: values.email,
+                    ccNumber: values.ccNumber,
+                    ccExpiryMonth: values.ccExpiryMonth,
+                    ccExpiryYear: values.ccExpiryYear,
+                });
+            if ("error" in placeOrderResponse) {
+                setCheckoutStatus("SERVER_ERROR");
+                setServerErrorMessage(placeOrderResponse.message);
+                console.log("Error placing order", placeOrderResponse);
+            } else {
+                setCheckoutStatus("OK");
+                await sleep(1000);
+                navigate("/confirmation");
+            }
         }
     };
 
@@ -108,8 +138,9 @@ export default function CheckoutPage() {
                                     <TextInput label="Credit Card" name="ccNumber"/>
                                     <div className='expiration-div'>
                                         <SelectInput label="Exp Date: " name="ccExpiryMonth" options={months()}/>
-                                        <SelectInput label="" name="ccExpiryYear" options={yearsArray}/>
+                                        <SelectInput label="" name="ccExpiryYear" options={years()}/>
                                     </div>
+
                                     <div className="complete-purchase">
                                         <button type="submit" className="call-to-action-button-skinny"
                                                 disabled={isSubmitting || checkoutStatus === 'PENDING'}>
@@ -120,21 +151,23 @@ export default function CheckoutPage() {
                                 </Form>
                             )}
                         </Formik>
-                        <div className="charges-div">
-                            <p>Your credit card will be charged {asDollarsAndCents(cart.total)}</p>
-                            <p>({asDollarsAndCents(cart.subtotal)} + {asDollarsAndCents(cart.surcharge)} shipping)</p>
-                        </div>
                     </section>
+
+                    <div className="charges-div">
+                        <p>Your credit card will be charged {asDollarsAndCents(cart.total)}</p>
+                        <p>({asDollarsAndCents(cart.subtotal)} + {asDollarsAndCents(cart.surcharge)} shipping)</p>
+                    </div>
+
                     {checkoutStatus != '' && (
-                        <section className="checkoutStatusBox">
+                        <section className="checkout-status-box">
                             {checkoutStatus === 'ERROR' &&
                                 <div>Error: Please fix the problems above and try again.</div>}
                             {checkoutStatus === 'PENDING' && <div>Processing...</div>}
                             {checkoutStatus === 'OK' && <div>Order placed...</div>}
-                            {checkoutStatus === 'SERVER_ERROR' &&
-                                <div>An unexpected error occurred, please try again.</div>}
+                            {checkoutStatus === "SERVER_ERROR" && serverErrorMessage}
                         </section>
                     )}
+
                 </section>
             )}
         </div>

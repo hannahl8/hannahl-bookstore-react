@@ -21,6 +21,7 @@
   */
   --default-font-size: 1rem;
   --default-text-color: white;
+  --error-text-color: #FF69B4;
 
   --primary-color: #6B00BF;
   --secondary-color: #AF49FF;
