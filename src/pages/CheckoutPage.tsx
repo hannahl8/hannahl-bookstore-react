@@ -13,6 +13,7 @@ import {useCategoryContext} from "../contexts/CategoryContext.tsx";
 import "./CheckoutPage.css";
 import {OrderDetails, ServerErrorResponse} from "../types.ts";
 import {placeOrder} from "../services.ts";
+import {useOrderDetails} from "../contexts/OrderDetailsContext.tsx";
 
 interface FormValues {
     name: string;
@@ -67,13 +68,14 @@ const validationSchema = object({
 });
 
 export default function CheckoutPage() {
-    const {cart} = useCart()
+    const {cart, dispatch: cartStore} = useCart()
     const {lastSelectedCategoryName} = useCategoryContext();
     const navigate = useNavigate();
     const [checkoutStatus, setCheckoutStatus] = useState<string>("");
     const [serverErrorMessage, setServerErrorMessage] = useState<string>(
         "An unexpected error occurred on the server, please try again."
     );
+    const {dispatch: orderDetailsStore} = useOrderDetails();
 
     const handleSubmit = async (
         values: FormValues,
@@ -97,17 +99,24 @@ export default function CheckoutPage() {
                     ccExpiryMonth: values.ccExpiryMonth,
                     ccExpiryYear: values.ccExpiryYear,
                 });
-            if ("error" in placeOrderResponse) {
+            if (isServerErrorResponse(placeOrderResponse)) {
                 setCheckoutStatus("SERVER_ERROR");
                 setServerErrorMessage(placeOrderResponse.message);
                 console.log("Error placing order", placeOrderResponse);
             } else {
+                const orderDetails = placeOrderResponse as OrderDetails;
+                console.log("order details", orderDetails);
+                orderDetailsStore({type: "UPDATE", orderDetails: orderDetails});
+                cartStore({type: "CLEAR_CART"});
                 setCheckoutStatus("OK");
-                await sleep(1000);
                 navigate("/confirmation");
             }
         }
     };
+
+    function isServerErrorResponse(response: any): response is ServerErrorResponse {
+        return response && typeof response === 'object' && 'error' in response;
+    }
 
     return (
         <div className="checkout-page hero-area">

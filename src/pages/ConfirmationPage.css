@@ -1,7 +1,30 @@
-.confirmation-page {
+#confirmation-page {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1em;
     padding: 1em;
+}
+
+#confirmation-page section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#confirmation-page section #order-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#confirmation-page section #order-details-table th,
+#confirmation-page section #order-details-table td {
+    border: 1px solid var(--secondary-color);
+    padding: 8px;
+}
+
+#confirmation-page section #order-details-table th {
+    background-color: var(--tertiary-color);
+    font-weight: bold;
 }
